@@ -16,18 +16,30 @@ Monorepo of SLAC accelerator surrogate models built with [LUME-Torch](https://gi
 
 Requires Python ≥ 3.11.
 
+### From a local clone
+
 ```bash
+git clone <repo-url>
+cd slac-surrogate-models
+
 # Install with all models
-pip install slac-surrogate-models[all]
+pip install -e ".[all]"
 
 # Install specific models only
-pip install slac-surrogate-models[facet2_inj_241,facet2_inj_571]
+pip install -e ".[facet2_inj_241,facet2_inj_571]"
 
 # Install a single model
-pip install slac-surrogate-models[lcls_cu_inj]
+pip install -e ".[lcls_cu_inj]"
 
-# Editable install for development
+# Install with dev/test dependencies
 pip install -e ".[all,dev]"
+```
+
+### From a remote repository (once published)
+
+```bash
+pip install "slac-surrogate-models[all]"
+pip install "slac-surrogate-models[lcls_cu_inj]"
 ```
 
 The base package always installs `lume-torch`, `torch`, and `numpy`. Model-specific extras pull in additional dependencies only when needed:
@@ -49,7 +61,7 @@ Every model exposes a `load_model()` function that returns a ready-to-use `lume_
 ```python
 from models.lcls_cu_inj import load_model
 model = load_model()
-result = model.evaluate({"QUAD:IN20:425:BACT": -1})
+result = model.evaluate({"QUAD:IN20:425:BCTRL": -1})
 ```
 
 ```python
@@ -139,50 +151,4 @@ Predicts 12 beam-evolution targets as a continuous function of beamline position
 ```bash
 pip install -e ".[all,test]"
 pytest tests/ -v
-```
-
-## Repository Structure
-
-```
-slac-surrogate-models/
-├── pyproject.toml
-├── README.md
-├── src/
-│   └── models/
-│       ├── __init__.py
-│       ├── lcls_cu_inj/
-│       │   ├── __init__.py
-│       │   ├── loader.py
-│       │   └── resources/
-│       ├── lcls_fel/
-│       │   ├── __init__.py
-│       │   ├── loader.py
-│       │   └── resources/
-│       ├── facet2_inj_241/
-│       │   ├── __init__.py
-│       │   ├── loader.py
-│       │   ├── beam_output_model.py
-│       │   ├── pv_mapping.py
-│       │   ├── training.py
-│       │   ├── transforms.py
-│       │   └── resources/
-│       ├── facet2_inj_571/
-│       │   ├── __init__.py
-│       │   ├── loader.py
-│       │   ├── beam_output_model.py
-│       │   ├── lume_model_utils.py
-│       │   ├── pv_mapping.py
-│       │   ├── training.py
-│       │   └── resources/
-│       └── facet2_inj_twiss/
-│           ├── __init__.py
-│           ├── loader.py
-│           ├── lume_model_utils.py
-│           ├── pv_mapping.py
-│           ├── training.py
-│           └── resources/
-└── tests/
-    ├── test_facet2_inj_241.py
-    ├── test_facet2_inj_571.py
-    └── test_facet2_inj_twiss.py
 ```
