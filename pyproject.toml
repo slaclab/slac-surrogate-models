@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "slac-surrogate-models"
+version = "1.0.0"
+description = "Monorepo of SLAC accelerator surrogate models built with LUME-Torch"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "lume-torch @ git+https://github.com/lume-science/lume-torch",
+    "torch",
+    "numpy",
+]
+
+[project.optional-dependencies]
+lcls_cu_inj = []
+lcls_fel = []
+facet2_inj_241 = [
+    "distgen @ git+https://github.com/ColwynGulliford/distgen",
+    "pandas",
+    "scipy",
+]
+facet2_inj_571 = [
+    "distgen @ git+https://github.com/ColwynGulliford/distgen",
+    "pandas",
+    "scipy",
+]
+facet2_inj_twiss = [
+    "pandas",
+]
+all = [
+    "slac-surrogate-models[lcls_cu_inj,lcls_fel,facet2_inj_241,facet2_inj_571,facet2_inj_twiss]",
+]
+test = [
+    "pytest",
+    "openPMD-beamphysics",
+    "botorch",
+    "scipy",
+]
+dev = [
+    "slac-surrogate-models[all,test]",
+    "black",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["models*"]
+
+[tool.setuptools.package-data]
+"models.lcls_cu_inj" = ["resources/*"]
+"models.lcls_fel" = ["resources/*"]
+"models.facet2_inj_241" = ["resources/**/*"]
+"models.facet2_inj_571" = ["resources/**/*"]
+"models.facet2_inj_twiss" = ["resources/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

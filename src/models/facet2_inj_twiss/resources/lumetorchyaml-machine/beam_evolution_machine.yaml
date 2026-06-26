@@ -1,0 +1,144 @@
+model_class: TorchModel
+input_variables:
+  QUAD:IN10:121:BCTRL:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 0.02199440635740757
+    value_range: [2.4672057406860404e-05, 0.09738637506961823]
+  KLYS:LI10:21:AMPL:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 39.5179328918457
+    value_range: [38.76961135864258, 40.45417022705078]
+  KLYS:LI10:21:PHAS:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 80.15150451660156
+    value_range: [73.04673767089844, 84.25987243652344]
+  KLYS:LI10:31:PHAS:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 19.745277404785156
+    value_range: [15.588480949401855, 25.403112411499023]
+  L0AF_scale:rf_field_scale:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: -10500128.0
+    value_range: [-12283504.0, -9637420.0]
+  KLYS:LI10:41:PHAS:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 139.404296875
+    value_range: [127.51083374023438, 152.00750732421875]
+  L0BF_scale:rf_field_scale:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 96376.0
+    value_range: [-4926720.0, 5106672.0]
+  QUAD:IN10:361:BCTRL:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: -3.9543631076812744
+    value_range: [-4.31797981262207, -3.249281167984009]
+  QUAD:IN10:371:BCTRL:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 4.144813537597656
+    value_range: [3.4783973693847656, 4.535581111907959]
+  QUAD:IN10:425:BCTRL:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: -5.084150791168213
+    value_range: [-8.666790962219238, -3.242222785949707]
+  QUAD:IN10:441:BCTRL:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 6.803668975830078
+    value_range: [5.418692111968994, 8.56787109375]
+  QUAD:IN10:511:BCTRL:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: -3.1679437160491943
+    value_range: [-4.292040824890137, -2.160616874694824]
+  QUAD:IN10:525:BCTRL:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 5.437295913696289
+    value_range: [-0.613460123538971, 7.4558234214782715]
+  SOLN:IN10:121:BCTRL:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 0.41872549057006836
+    value_range: [0.40037012100219727, 0.4624386429786682]
+  QUAD:IN10:122:BCTRL:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 0.02259340137243271
+    value_range: [-0.04129604250192642, 0.10292734205722809]
+  distgen:VCC:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 320.2756042480469
+    value_range: [0.0, 645.0]
+  distgen:t_dist:sigma_t:value:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: -0.2703847885131836
+    value_range: [-0.6521549820899963, 0.8119583129882812]
+  TORO:IN10:591:TMIT_PC:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 949.5787963867188
+    value_range: [940.5410766601562, 1048.1387939453125]
+  impact_VCC_Cal:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: -3.2719663067837246e-06
+    value_range: [-3.5084999581158627e-06, -1.4919996829121374e-06]
+  s:
+    variable_class: TorchScalarVariable
+    read_only: false
+    default_validation_config: none
+    default_value: 2.071000099182129
+    value_range: [0.021, 4.121]
+output_variables:
+  sigma_x: {variable_class: TorchScalarVariable, read_only: false, default_validation_config: none}
+  sigma_y: {variable_class: TorchScalarVariable, read_only: false, default_validation_config: none}
+  sigma_z: {variable_class: TorchScalarVariable, read_only: false, default_validation_config: none}
+  norm_emit_x: {variable_class: TorchScalarVariable, read_only: false, default_validation_config: none}
+  norm_emit_y: {variable_class: TorchScalarVariable, read_only: false, default_validation_config: none}
+  emit_geom_x: {variable_class: TorchScalarVariable, read_only: false, default_validation_config: none}
+  emit_geom_y: {variable_class: TorchScalarVariable, read_only: false, default_validation_config: none}
+  beta_x: {variable_class: TorchScalarVariable, read_only: false, default_validation_config: none}
+  alpha_x: {variable_class: TorchScalarVariable, read_only: false, default_validation_config: none}
+  beta_y: {variable_class: TorchScalarVariable, read_only: false, default_validation_config: none}
+  alpha_y: {variable_class: TorchScalarVariable, read_only: false, default_validation_config: none}
+  mean_kinetic_energy: {variable_class: TorchScalarVariable, read_only: false, default_validation_config: none}
+input_validation_config: null
+output_validation_config: null
+model: beam_evolution_machine_model.pt
+input_transformers: [beam_evolution_machine_input_transformers_0.pt, beam_evolution_machine_input_transformers_1.pt]
+output_transformers: [beam_evolution_machine_output_transformers_0.pt]
+output_format: tensor
+device: cpu
+fixed_model: true
+precision: single
