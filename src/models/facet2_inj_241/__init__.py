@@ -3,6 +3,7 @@
 import sys
 from importlib import import_module
 
+import models.facet2_inj_241.transforms as _transforms
 from models.facet2_inj_241.loader import load_model
 
 _LEGACY_TRAIN_EXPORTS = {
@@ -20,7 +21,10 @@ def __getattr__(name):
 	raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
-sys.modules.setdefault("train", sys.modules[__name__])
+# Register legacy module aliases so torch.load can unpickle classes serialized
+# under the old single-repo package name.
+sys.modules.setdefault("facet2_inj_ml_model", sys.modules[__name__])
+sys.modules.setdefault("facet2_inj_ml_model.transforms", _transforms)
 
 __version__ = "0.1.0"
 __all__ = ["load_model", "BeamOutputModel", "pv_mapping", *_LEGACY_TRAIN_EXPORTS]

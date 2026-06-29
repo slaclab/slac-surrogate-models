@@ -20,7 +20,6 @@ def __getattr__(name):
 	raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
-sys.modules.setdefault("train", sys.modules[__name__])
 sys.modules.setdefault("train2", sys.modules[__name__])
 
 __version__ = "0.1.0"

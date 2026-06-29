@@ -7,13 +7,6 @@ from lume_torch.models import TorchModel, TorchModule
 from models.facet2_inj_twiss import lume_model_utils
 from models.facet2_inj_twiss import training as _training_module
 
-# Register module aliases so torch.load can unpickle classes serialized as
-# lume_model_utils.PVToSimWithS / lume_model_utils.OutputDenormTransform
-# and train.BeamEvolutionModel.
-sys.modules.setdefault("lume_model_utils", lume_model_utils)
-sys.modules.setdefault("infer_beam_evolution", lume_model_utils)
-sys.modules.setdefault("train", _training_module)
-
 
 _MODEL_CONFIGS = {
     "machine": "lumetorchyaml-machine/beam_evolution_machine.yaml",
@@ -58,5 +51,11 @@ def load_model(input_space="machine"):
         raise ValueError(
             f"Unknown input_space {input_space!r}; expected one of {list(_MODEL_CONFIGS)}"
         )
+    # Force-set module aliases right before torch.load unpickling.
+    # Cannot use setdefault because other models may claim the same names.
+    sys.modules["lume_model_utils"] = lume_model_utils
+    sys.modules["infer_beam_evolution"] = lume_model_utils
+    sys.modules["train"] = _training_module
+
     config_path = get_resource_path(_MODEL_CONFIGS[input_space])
     return TorchModel(config_path)

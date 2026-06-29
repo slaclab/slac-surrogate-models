@@ -84,6 +84,8 @@ class CovMeanTorchModel(TorchModel):
         if output_tensor.dim() == 1:
             output_tensor = output_tensor.unsqueeze(0)
 
+        squeeze = output_tensor.shape[0] == 1
+
         parsed_outputs = {}
         idx = 0
         for var in self.output_variables:
@@ -92,11 +94,13 @@ class CovMeanTorchModel(TorchModel):
                 for s in var.shape:
                     n_elements *= s
                 flat_chunk = output_tensor[:, idx:idx + n_elements]
-                parsed_outputs[var.name] = flat_chunk.reshape(-1, *var.shape)
+                val = flat_chunk.reshape(-1, *var.shape)
+                parsed_outputs[var.name] = val.squeeze(0) if squeeze else val
                 idx += n_elements
             else:
                 # TorchScalarVariable
-                parsed_outputs[var.name] = output_tensor[:, idx:idx + 1]
+                val = output_tensor[:, idx:idx + 1]
+                parsed_outputs[var.name] = val.squeeze(0) if squeeze else val
                 idx += 1
         return parsed_outputs
 

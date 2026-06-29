@@ -1,6 +1,6 @@
 """Model loading utilities"""
 
-import os
+import sys
 from pathlib import Path
 from lume_torch.models import TorchModel
 
@@ -45,6 +45,10 @@ def load_model(input_space="machine"):
         raise ValueError(
             f"Unknown input_space {input_space!r}; expected one of {list(_MODEL_CONFIGS)}"
         )
+    # Force-set module alias so torch.load can unpickle train.CovarianceSurrogateModel
+    from models.facet2_inj_241 import training as _training_module
+    sys.modules["train"] = _training_module
+
     config_path = get_resource_path(_MODEL_CONFIGS[input_space])
     
     # Load the model using the config

@@ -10,10 +10,6 @@ from models.facet2_inj_571.lume_model_utils import (
     CovMeanTorchModule,
 )
 
-# Register as top-level module so torch.load can unpickle classes serialized
-# when lume_model_utils lived outside the package.
-sys.modules.setdefault("lume_model_utils", lume_model_utils)
-
 
 _MODEL_CONFIGS = {
     "machine": "lumetorchyaml-machine/injector_machine.yaml",
@@ -69,6 +65,10 @@ def load_model(input_space="machine", full=False):
         raise ValueError(
             f"Unknown input_space {input_space!r}; expected one of {list(configs)}"
         )
+    # Force-set module alias so torch.load can unpickle classes serialized
+    # when lume_model_utils lived outside the package.
+    sys.modules["lume_model_utils"] = lume_model_utils
+
     config_path = get_resource_path(configs[input_space])
     
     if full:
