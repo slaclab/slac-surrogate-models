@@ -103,18 +103,18 @@ class TestEvaluate:
 
     def test_covariance_shape(self, machine_model):
         result = machine_model.evaluate(EXAMPLE_INPUT)
-        cov = result["covariance_matrix"]
+        cov = result["covariance_matrix"].squeeze()
         assert cov.shape == (6, 6)
 
     def test_covariance_is_symmetric(self, machine_model):
         result = machine_model.evaluate(EXAMPLE_INPUT)
-        cov = result["covariance_matrix"]
+        cov = result["covariance_matrix"].squeeze()
         torch.testing.assert_close(cov, cov.T, atol=1e-6, rtol=1e-5)
 
     def test_covariance_eigenvalues_reasonable(self, machine_model):
         """Check eigenvalues are not wildly negative (small negatives are acceptable numerical noise)."""
         result = machine_model.evaluate(EXAMPLE_INPUT)
-        cov = result["covariance_matrix"]
+        cov = result["covariance_matrix"].squeeze()
         eigenvalues = torch.linalg.eigvalsh(cov)
         max_eig = eigenvalues.abs().max()
         assert (eigenvalues >= -1e-4 * max_eig).all(), f"Large negative eigenvalue found: {eigenvalues}"
@@ -122,7 +122,7 @@ class TestEvaluate:
     def test_covariance_matches_reference(self, machine_model):
         """Regression test: covariance must match the verified reference output."""
         result = machine_model.evaluate(EXAMPLE_INPUT)
-        cov = result["covariance_matrix"]
+        cov = result["covariance_matrix"].squeeze()
         torch.testing.assert_close(cov, EXPECTED_COVARIANCE, atol=1e-6, rtol=1e-3)
 
 

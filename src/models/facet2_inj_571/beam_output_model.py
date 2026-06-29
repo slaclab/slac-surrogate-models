@@ -106,6 +106,8 @@ class BeamOutputModel(LUMEModel, FinalParticlesMixIn):
         # units and variable order: [x, px, y, py, z, pz]
         # units: [m, eV/c, m, eV/c, s, eV/c]
         covariance_matrix = self._cache["covariance_matrix"]
+        if covariance_matrix.dim() == 3:
+            covariance_matrix = covariance_matrix.squeeze(0)
 
         # convert covariance matrix time axis to z using speed of light units for the
         # surrogate and openPMD ParticleBeam convention
