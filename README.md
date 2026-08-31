@@ -8,6 +8,7 @@ Monorepo of SLAC accelerator surrogate models built with [LUME-Torch](https://gi
 |---|---|---|---|---|
 | `lcls_cu_inj` | LCLS Cu Injector | Machine PVs | Beam properties at OTR2 | Trained on IMPACT-T data for the LCLS Cu injector |
 | `lcls_fel` | LCLS FEL | Machine PVs | FEL pulse intensity | ML surrogate of the LCLS FEL |
+| `lcls_fel_genesis` | LCLS FEL (Genesis) | Twiss, chirp, taper, beam length | Pulse energy, bandwidth, peak intensity & photon energy | Surrogate of Genesis FEL output quantities |
 | `facet2_inj_241` | FACET-II Injector (241) | 7 PVs / sim params | 6×6 covariance matrix | Beam covariance at screen 241 |
 | `facet2_inj_571` | FACET-II Injector (571) | 19 PVs / sim params | 6×6 covariance matrix + optional means | Beam covariance (+ phase-space means) at screen 571 |
 | `facet2_inj_twiss` | FACET-II Twiss | 19 PVs / sim params + s | 12 beam-evolution targets | Twiss parameters & beam sizes vs beamline position |
@@ -48,6 +49,7 @@ The base package always installs `lume-torch`, `torch`, and `numpy`. Model-speci
 |---|---|
 | `lcls_cu_inj` | — |
 | `lcls_fel` | — |
+| `lcls_fel_genesis` | — |
 | `facet2_inj_241` | `distgen`, `pandas`, `scipy` |
 | `facet2_inj_571` | `distgen`, `pandas`, `scipy` |
 | `facet2_inj_twiss` | `pandas` |
@@ -91,6 +93,46 @@ model = load_model()
 ```
 
 ML surrogate of the LCLS FEL pulse intensity.
+
+### LCLS FEL Genesis Output (`lcls_fel_genesis`)
+
+```python
+from models.lcls_fel_genesis import load_model
+
+model = load_model()
+result = model.evaluate({"taper": 0.05, "chirp": -8.0})
+```
+
+Predicts Genesis FEL output quantities from the electron-beam Twiss parameters, energy chirp, undulator taper and start position, and beam length.
+
+| Input | Range | Unit |
+|---|---|---|
+| `alphax` | −2.5 – 1.0 | — |
+| `alphay` | 1.0 – 2.5 | — |
+| `betax`, `betay` | 5.0 – 30.0 | m |
+| `emitx`, `emity` | 1e−7 – 1e−6 | m |
+| `chirp` | −20.0 – 0.0 | MeV/m |
+| `taper` | 0.0 – 0.2 | — |
+| `ustart` | 10.0 – 16.0 | — |
+| `beam_length` | 1.5e−5 – 1.8e−5 | m |
+
+| Output | Description | Unit |
+|---|---|---|
+| `energy` | Pulse energy | uJ |
+| `bandwidth` | Spectral bandwidth | eV |
+| `peak_intensity` | Peak intensity | au |
+| `peak_energy` | Peak photon energy | eV |
+
+The model runs in double precision and returns tensors, so it evaluates a batch of points in one call:
+
+```python
+import torch
+
+result = model.evaluate({
+    "taper": torch.tensor([0.02, 0.05, 0.10], dtype=torch.double),
+})
+result["energy"].shape  # torch.Size([3, 1])
+```
 
 ### FACET-II Injector at Screen 241 (`facet2_inj_241`)
 

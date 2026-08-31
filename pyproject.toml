@@ -17,6 +17,7 @@ dependencies = [
 [project.optional-dependencies]
 lcls_cu_inj = []
 lcls_fel = []
+lcls_fel_genesis = []
 facet2_inj_241 = [
     "distgen @ git+https://github.com/ColwynGulliford/distgen",
     "pandas",
@@ -31,7 +32,7 @@ facet2_inj_twiss = [
     "pandas",
 ]
 all = [
-    "slac-surrogate-models[lcls_cu_inj,lcls_fel,facet2_inj_241,facet2_inj_571,facet2_inj_twiss]",
+    "slac-surrogate-models[lcls_cu_inj,lcls_fel,lcls_fel_genesis,facet2_inj_241,facet2_inj_571,facet2_inj_twiss]",
 ]
 test = [
     "pytest",
@@ -51,6 +52,7 @@ include = ["models*"]
 [tool.setuptools.package-data]
 "models.lcls_cu_inj" = ["resources/*"]
 "models.lcls_fel" = ["resources/*"]
+"models.lcls_fel_genesis" = ["resources/*"]
 "models.facet2_inj_241" = ["resources/**/*"]
 "models.facet2_inj_571" = ["resources/**/*"]
 "models.facet2_inj_twiss" = ["resources/**/*"]
